@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的作业</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .assignment-list {
+            list-style: none; /* 移除列表项的默认样式 */
+            padding: 0; /* 移除默认的内边距 */
+        }
+        .assignment-item {
+            background-color: #f8f9fa; /* 每个列表项的背景颜色 */
+            border: 1px solid #dee2e6; /* 列表项边框 */
+            margin-bottom: 10px; /* 列表项间距 */
+            padding: 10px; /* 列表项内边距 */
+            display: flex; /* 采用弹性盒布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: space-between; /* 两端对齐 */
+        }
+        .assignment-status {
+            /* 根据需要添加样式 */
+            margin-left: 10px; /* 状态和标题之间的距离 */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">我的作业</h1>
+    <ul class="assignment-list">
+        <!-- 使用Thymeleaf循环渲染课程数据 -->
+        <li th:each="assignment : ${assignmentCheck}" class="assignment-item">
+            <span th:text="${assignment.title}"></span>
+            <a th:href="@{'/assignment/teacher/assignmentDetail/' + ${assignment.id}}" class="btn btn-primary">查看详情</a></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+
+

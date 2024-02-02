@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-form {
+            width: 300px; /* Fixed width for the form */
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding does not affect overall width */
+        }
+        .message {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+        }
+        .ok {
+            color: #28a745; /* Bootstrap success color for reference */
+        }
+        .submit-button {
+            width: 100%; /* Makes the button full-width */
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+<div class="login-form">
+    <h1>Login Page</h1>
+    <div class="message" th:if="${param.msg != null}">
+        <span th:classappend="${param.status}" th:text="${param.msg}"></span>
+    </div>
+    <form th:action="@{/api/login(redirect=${param.redirect})}" method="post">
+        <div class="form-group">
+            <label>Username:<input type="text" name="username"></label>
+        </div>
+        <div class="form-group">
+            <label>Password:<input type="password" name="password"></label>
+        </div>
+        <input type="submit" class="submit-button" value="Login">
+        <a th:href="@{/auth/register/}">Register</a>
+    </form>
+</div>
+</body>
+</html>

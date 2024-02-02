@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生已选课表</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+    <h1 class="mt-5">已选表</h1>
+
+    <a th:href="@{'/course/student/courseAdd'}" class="btn btn-success mb-3">选择课程</a>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>课程名称</th>
+            <th>课程描述</th>
+            <th>课程进展</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 使用Thymeleaf循环渲染课程数据 -->
+        <tr th:each="enrollmentDtos, stat  : ${enrollmentDtos}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${enrollmentDtos.name}"></td>
+            <td th:text="${enrollmentDtos.description}"></td>
+<!--            <td>-->
+<!--                <div class="progress">-->
+<!--                    <div class="progress-bar" role="progressbar" th:style="'width: 30%'">-->
+<!--                        <span th:text="'30%'"></span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </td>-->
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" th:style="'width: ' + ${enrollmentDtos.process} + '%'">
+                        <span th:text="${enrollmentDtos.process} + '%'"></span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a th:href="@{'/course/student/courseDetail/' + ${enrollmentDtos.courseId}}" class="btn btn-primary">查看详情</a>
+                <a href="#" th:onclick="'deleteCourse(' + ${enrollmentDtos.courseId} + ', ' + ${enrollmentDtos.studentId} + ');'" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> 退课
+                </a>
+                <a th:href="@{'/course/student/courseFeedback/' + ${enrollmentDtos.courseId}}" class="btn btn-secondary">学生评价</a>
+                <a th:href="@{'/assignment/student/assignmentWatch/' + ${enrollmentDtos.courseId}}" class="btn btn-secondary">查看课程作业</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+<script>
+    function deleteCourse(courseId, studentId) {
+        console.log("删除按钮点击");
+        var confirmation = confirm('确定要删除此课程吗？');
+        if (confirmation) {
+            fetch('/course/student/courseDelete/' + courseId + '/' + studentId, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // 删除成功后执行一些操作（例如刷新页面）
+                        window.location.reload();
+                    } else {
+                        // 处理错误情况
+                        alert('删除失败');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+</script>
+</html>

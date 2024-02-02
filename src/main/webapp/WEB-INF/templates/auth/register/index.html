@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-form {
+            width: 300px; /* Fixed width for the form */
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding does not affect overall width */
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 10px; /* Adds space below the error message */
+        }
+        .submit-button {
+            width: 100%; /* Makes the button full-width */
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+<div class="register-form">
+    <h1>Register Page</h1>
+    <div class="error" th:if="${param.msg != null}" th:text="${param.msg}"></div>
+    <form th:action="@{/api/register}" method="post">
+        <div class="form-group">
+            <label>Name: <input type="text" name="name"></label>
+        </div>
+        <div class="form-group">
+            <label>Email: <input type="text" name="email"></label>
+        </div>
+        <div class="form-group">
+            <label>Username: <input type="text" name="username"></label>
+        </div>
+        <div class="form-group">
+            <label>Password: <input type="password" name="password"></label>
+        </div>
+        <div class="form-group">
+            <label>Class Name: <input type="text" name="className"></label>
+        </div>
+        <div class="form-group">
+            <label>Subject: <input type="text" name="subject"></label>
+        </div>
+        <div class="form-group">
+            <label>Role:
+                <select name="role">
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                </select>
+            </label>
+        </div>
+        <input type="submit" class="submit-button" value="Register">
+        <a th:href="@{/auth/login/}">Login</a>
+    </form>
+</div>
+</body>
+</html>

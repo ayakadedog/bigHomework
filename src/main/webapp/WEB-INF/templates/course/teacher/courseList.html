@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>课程列表</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+    <h1 class="mt-5">课程列表</h1>
+
+    <a th:href="@{'/course/teacher/courseAdd'}" class="btn btn-success mb-3">添加新课程</a>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>课程名称</th>
+            <th>课程描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 使用Thymeleaf循环渲染课程数据 -->
+        <tr th:each="course, stat  : ${courses}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${course.name}"></td>
+            <td th:text="${course.description}"></td>
+            <td>
+                <a th:href="@{'/course/teacher/courseDetail/' + ${course.id}}" class="btn btn-primary">查看详情</a>
+                <a href="#" th:onclick="'deleteCourse(' + ${course.id} + ')'" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> 删除
+                </a>
+                <a th:href="@{'/progress/studentList/' + ${course.id}}" class="btn btn-primary">查看学生学习进度</a>
+                <a th:href="@{'/assignment/teacher/assignmentPublish/' + ${course.id}}" class="btn btn-primary">发布作业</a>
+                <a th:href="@{'/assignment/teacher/assignmentCheck/' + ${course.id}}" class="btn btn-primary">查看作业</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+<script>
+    function deleteCourse(courseId) {
+        console.log("删除按钮点击")
+        var confirmation = confirm('确定要删除此课程吗？');
+        if (confirmation) {
+            // 发送DELETE请求到后端Servlet
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', '/course/teacher/courseDelete/' + courseId, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // 删除成功后执行一些操作（例如刷新页面）
+                        window.location.reload();
+                    } else {
+                        // 处理错误情况
+                        alert('删除失败');
+                    }
+                }
+            };
+            xhr.send();
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>新增课程</title>
+
+  <!-- 引入Bootstrap的CSS文件，使用国内CDN -->
+  <!-- CSS -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+  <h1 class="mt-5">新增课程</h1>
+
+  <!-- 表单用于输入课程信息 -->
+  <form th:action="@{'/course/teacher/courseAdd'}" method="post">
+    <div class="mb-3">
+      <label for="courseName" class="form-label">课程名称</label>
+      <input type="text" class="form-control" id="courseName" name="courseName" required>
+    </div>
+    <div class="mb-3">
+      <label for="courseDescription" class="form-label">课程描述</label>
+      <textarea class="form-control" id="courseDescription" name="courseDescription" rows="4" required></textarea>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-success">保存</button>
+      <a th:href="@{'/course/teacher/courseList'}" class="btn btn-secondary">取消</a>
+    </div>
+  </form>
+</div>
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

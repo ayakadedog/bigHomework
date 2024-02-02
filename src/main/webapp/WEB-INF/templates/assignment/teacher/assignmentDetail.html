@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的作业</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .assignment-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .assignment-item {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            margin-bottom: 10px;
+            padding: 10px;
+            cursor: pointer; /* 添加指针样式以表示可点击 */
+        }
+
+        .assignment-details {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <ul class="assignment-list">
+        <!-- 使用Thymeleaf循环渲染作业列表 -->
+        <li th:each="assignment : ${assignmentList}" class="assignment-item">
+            <h2 th:text="${assignment.title}"></h2>
+            <p th:text="'作业描述 : ' + ${assignment.description}"></p>
+            <p th:text="'作业提交数量 : ' + ${submitNum}" class="assignment-details"></p>
+            <p th:text="'作业截止日期 : ' + ${assignment.dueDate}" class="assignment-details"></p>
+            <p th:text="'作业创建日期 : ' + ${assignment.createTime}" class="assignment-details"></p>
+            <!-- 这里你可以添加其他作业详情字段 -->
+            <a th:href="@{'/assignment/teacher/assignmentSituation/' + ${assignment.id}}" class="btn btn-primary">查看学生作业</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+

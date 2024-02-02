@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>试卷列表</title>
+    <meta charset="UTF-8">
+    <!-- 引入Bootstrap CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">考试列表</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>标题</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="paper : ${papers}">
+            <td th:text="${paper.title}">标题</td>
+            <td th:text="${paper.startTime}">开始时间</td>
+            <td th:text="${paper.endTime}">结束时间</td>
+            <td>
+                <a th:href="@{'/exam/student/doExam/' + ${paper.paperId}}" class="btn btn-primary">考试</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+
+

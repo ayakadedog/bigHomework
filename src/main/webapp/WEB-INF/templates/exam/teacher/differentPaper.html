@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>答卷信息</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>答卷详情</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>用户名字</th>
+            <th>得分</th>
+            <th>一键批卷</th>
+            <th>人工批卷</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="info : ${personScores}">
+            <td th:text="${info.name}">用户名</td>
+            <td th:text="${info.totalScore}">得分</td>
+            <td>
+            <a th:href="@{'/exam/teacher/automaticGrade/' + ${paperId} +'/' +${info.userId} }" class="btn btn-primary">一键批卷</a>
+            </td>
+            <td>
+            <a th:href="@{'/exam/teacher/paperGrade/' + ${paperId} + '/' +${info.userId}}" class="btn btn-primary">人工阅卷</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

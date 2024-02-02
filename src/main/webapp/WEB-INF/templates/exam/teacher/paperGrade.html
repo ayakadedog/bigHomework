@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试卷信息</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+    <h1 class="mt-5">试卷信息</h1>
+    <a>试卷总分: </a>
+    <span th:text="${totalScore}"></span>
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>题目内容</th>
+            <th>学生答案</th>
+            <th>分数</th>
+            <th>设置分数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 使用Thymeleaf循环渲染题库数据 -->
+        <tr th:each="question, stat: ${paperQuestion}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${question.content}"></td>
+            <td th:text="${question.answer}"></td>
+            <td th:text="${question.score}"></td>
+            <td>
+                <form th:action="@{'/exam/teacher/paperGrade/' + ${userId} + '/' + ${paperId}}" method="post">
+                    <div class="form-group">
+                        <input type="hidden" name="paperQuestionId" th:value="${question.paperQuestionId}"/>
+                        <label for="score">分数</label>
+                        <input type="number" class="form-control" id="score" placeholder="请设置分数" name="score">
+                        <button type="submit">设置分数</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

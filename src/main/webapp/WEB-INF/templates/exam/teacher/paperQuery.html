@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>考卷信息</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">考卷信息</h1>
+    <!-- 添加试卷按钮 -->
+    <button type="button" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#addPaperModal">
+        添加试卷
+    </button>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="addPaperModal" tabindex="-1" role="dialog" aria-labelledby="addPaperModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPaperModalLabel">创建新试卷</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- 表单内容 -->
+                    <form id="addPaperForm" th:action="@{'/exam/teacher/addPaper'}" method="post">
+                        <div class="form-group">
+                            <label for="paper-title">试卷题目</label>
+                            <input type="text" class="form-control" id="paper-title" name="title" placeholder="请输入试卷题目">
+                        </div>
+                        <div class="form-group">
+                            <label for="start-time">开始时间</label>
+                            <input type="datetime-local" class="form-control" id="start-time" name="startTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="end-time">结束时间</label>
+                            <input type="datetime-local" class="form-control" id="end-time" name="endTime">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存试卷</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>考卷标题</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>是否激活</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="paper, stat: ${paperList}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${paper.title}"></td>
+            <td th:text="${paper.startTime}"></td>
+            <td th:text="${paper.endTime}"></td>
+            <td th:text="${paper.isActive == 1 ? '已激活' : '未激活'}"></td>
+            <td>
+                <a th:href="@{'/exam/teacher/activatePaper/' + ${paper.paperId}}" class="btn btn-primary">激活</a>
+                <a th:href="@{'/exam/teacher/cancelActivation/' + ${paper.paperId}}" class="btn btn-primary">取消激活</a>
+                <a th:href="@{'/exam/teacher/paperCombine/' + ${paper.paperId}}" class="btn btn-primary">组卷</a>
+                <a th:href="@{'/exam/teacher/paperPreview/' + ${paper.paperId}}" class="btn btn-primary">预览试卷</a>
+                <a th:href="@{'/exam/teacher/differentPaper/' + ${paper.paperId}}"class="btn btn-primary">查看答卷</a>
+                <a th:href="@{'/exam/teacher/deletePaper/' + ${paper.paperId}}" class="btn btn-danger">删除试卷</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+</html>
+
+
+

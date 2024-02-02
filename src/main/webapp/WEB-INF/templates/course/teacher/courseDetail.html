@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>课程详情列表</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+
+    <h1 class="mt-5" th:text="${courseUnitDto.name}"></h1>
+
+    <a th:href="@{'/course/teacher/courseEdit/'+ ${courseUnitDto.id}}" class="btn btn-success mb-3">修改课程信息</a>
+
+    <form id="uploadForm" th:action="@{'/course/teacher/courseMaterialAdd/' + ${courseUnitDto.id} }" method="post" enctype="multipart/form-data" style="display: none;">
+        <input type="file" name="file" id="fileInput" multiple="multiple" />
+    </form>
+
+<!--    <a th:href="@{'/course/teacher/courseDetail/' + ${courseUnitDto.id}}" class="btn btn-secondary mb-3">添加课程资料</a>-->
+    <a th:href="@{'/course/teacher/courseUnitAdd/'+ ${courseUnitDto.id}}" class="btn btn-success mb-3">添加新单元</a>
+    <a th:href="@{'/course/teacher/courseList'}" class="btn btn-secondary mb-3">返回</a>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>课程单元</th>
+            <th>单元描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 使用Thymeleaf循环渲染课程数据 -->
+
+        <tr th:each="courseUnit, stat  : ${courseUnitDto.list }">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${courseUnit.name}"></td>
+            <td th:text="${courseUnit.materialUrl}"></td>
+            <td>
+                <a th:href="@{'/course/teacher/courseUnitEdit/' + ${courseUnit.id}}" class="btn btn-primary">修改单元信息</a>
+                <a href="#" th:onclick="'deleteUnit(' + ${courseUnit.id} + ')'" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> 删除
+                </a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <h1 class="mt-5">课程资料</h1>
+    <a id="uploadLink" href="#" class="btn btn-success mb-3">添加课程资料</a>
+
+    <table class="table mt-4">
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>资料类型</th>
+            <th>资料名字</th>
+        </tr>
+        </thead>
+             <tr th:each="courseMaterialList, stat  : ${courseMaterialList}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${courseMaterialList.materialType}"></td>
+            <td th:text="${courseMaterialList.materialUrl}"></td>
+            <td>
+
+                <a th:href="@{/api/download(filePath = ${courseMaterialList.materialUrl})}" target="_blank" class="btn btn-primary">下载文件</a>
+
+                <a href="#" th:onclick="'deleteCourseMaterial(' + ${courseMaterialList.id} + ')'" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span> 删除
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+<script>
+    function deleteCourseMaterial(courseId) {
+        console.log("删除按钮点击")
+        var confirmation = confirm('确定要删除此课程吗？');
+        if (confirmation) {
+            // 发送DELETE请求到后端Servlet
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', '/course/teacher/courseMaterialDelete/' + courseId, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // 删除成功后执行一些操作（例如刷新页面）
+                        window.location.reload();
+                    } else {
+                        // 处理错误情况
+                        alert('删除失败');
+                    }
+                }
+            };
+            xhr.send();
+        }
+    };
+    document.getElementById('uploadLink').addEventListener('click', function () {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function () {
+        document.getElementById('uploadForm').submit();
+    });
+    function deleteUnit(unitId) {
+        console.log("删除按钮点击")
+        var confirmation = confirm('确定要删除此课程吗？');
+        if (confirmation) {
+            // 发送DELETE请求到后端Servlet
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', '/course/teacher/courseUnitDelete/' + unitId, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // 删除成功后执行一些操作（例如刷新页面）
+                        window.location.reload();
+                    } else {
+                        // 处理错误情况
+                        alert('删除失败');
+                    }
+                }
+            };
+            xhr.send();
+        }
+    };
+</script>
+</html>

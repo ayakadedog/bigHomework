@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>讨论区详细内容</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        div.content {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        p {
+            margin: 0 0 10px;
+            line-height: 1.5;
+        }
+        strong {
+            color: #333;
+        }
+        /* 新增的表单样式 */
+        form {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+        }
+
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* 新增的表单标题样式 */
+        .form-title {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${'标题: ' + discussion.title}">标题</h1>
+<div th:each="content : ${contents}" class="content">
+    <p><strong>用户:</strong> <span th:text="${content.userName}">用户名字</span></p>
+    <p><strong>内容:</strong> <span th:text="${content.content}">回复内容</span></p>
+    <p><strong>发表于:</strong> <span th:text="${content.createdAt}">创建时间</span></p>
+    <p><strong>更新于:</strong> <span th:text="${content.updatedAt}">更新时间</span></p>
+    <!--suppress ThymeleafVariablesResolveInspection -->
+    <div th:if="${content.userID == user.id}">
+        <a th:href="@{/discussion/edit/(id=${content.id})}" >编辑</a>
+    </div>
+</div>
+
+<!-- 底部表单 -->
+<form th:action="@{/api/discussion/content/add(discussion_id=${discussion.id})}" method="post">
+    <!-- 表单标题 -->
+    <div class="form-title">新增回复</div>
+    <label for="content">内容:</label><br>
+    <textarea id="content" name="content"></textarea><br>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

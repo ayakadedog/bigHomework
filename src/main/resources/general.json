@@ -1,0 +1,8 @@
+{
+  "databaseConfig": {
+    "driver": "com.mysql.cj.jdbc.Driver",
+    "url": "jdbc:mysql://nj-cynosdbmysql-grp-jbl3ehg9.sql.tencentcdb.com:23091/javaWeb?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8",
+    "username": "root",
+    "password": "Fxy123456"
+  }
+}

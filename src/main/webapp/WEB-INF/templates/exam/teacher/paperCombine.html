@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选题</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">选题</h1>
+    <span>已选题目ID: </span>
+    <span th:each="question : ${paperQuestions}" th:text="${question.questionId}+'     '"></span>
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>添加</th>
+            <th>题号</th>
+            <th>题目内容</th>
+            <th>题目类型</th>
+            <th>取消</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="questions, stat: ${questionsList}">
+            <td>
+                <form th:action="@{'/exam/teacher/paperCombine/' + ${questions.questionId}}" method="post">
+                    <input type="hidden" name="paperId" th:value="${paperId}"/>
+                    <input type="hidden" name="action" value="add">
+                    <button type="submit" class="btn btn-primary" th:disabled="${status == 1}">添加题目</button>
+                </form>
+            </td>
+            <td th:text="${questions.questionId}"></td>
+            <td th:text="${questions.content}"></td>
+            <td th:text="${questions.type}"></td>
+            <td>
+                <form th:action="@{'/exam/teacher/paperCombine/' + ${questions.questionId}}" method="post">
+                    <input type="hidden" name="paperId" th:value="${paperId}"/>
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" class="btn btn-danger">取消题目</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+
+

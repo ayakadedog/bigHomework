@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发布作业</title>
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">发布作业</h1>
+
+    <!-- 表单用于输入作业信息 -->
+    <form th:action="@{'/assignment/teacher/assignmentPublish/'+ ${courseId}}" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">作业标题</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">作业描述</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="dueDate" class="form-label">截止日期</label>
+            <input type="datetime-local" class="form-control" id="dueDate" name="dueDate" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">发布</button>
+            <a th:href="@{'/course/teacher/courseList'}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
+

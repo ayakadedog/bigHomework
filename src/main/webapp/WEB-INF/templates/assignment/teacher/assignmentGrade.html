@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>作业批改</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>学生作业情况</h1>
+    <form th:action="@{'/assignment/teacher/assignmentFeedback/'+ ${aId} + '/' +  ${uId}}" method="post">
+        <ul class="list-group">
+            <li th:each="workList : ${submitWorkList}" class="list-group-item">
+                <p th:text="${workList.answer}">作业答案</p>
+                <div class="form-group">
+                    <label for="score">打分:</label>
+                    <input type="number" class="form-control" id="score" name="score" min="0" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="feedback">反馈意见:</label>
+                    <textarea class="form-control" id="feedback" name="feedback" rows="3" required></textarea>
+                </div>
+            </li>
+            <button type="submit" class="btn btn-primary">提交评分和反馈</button>
+        </ul>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

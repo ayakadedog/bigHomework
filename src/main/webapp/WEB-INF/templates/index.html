@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>主页</title>
+    <script>
+        function toggleUserInfo() {
+            const x = document.getElementById("userInfo");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>主页</h1>
+<ul>
+<!--    <li><a href="/permission">权限管理</a></li>-->
+<!--    <li><a href="/menu">菜单管理</a></li>-->
+<!--    <li><a href="/log">日志管理</a></li>-->
+    <li><a th:href="@{/notification/}">消息通知</a></li>
+    <li th:if="${session.user != null}" onclick="toggleUserInfo()">我的信息(点击显示)</li>
+    <li>
+        <a th:if="${session.user.getRole() == 'admin'}" th:href="@{/course/teacher/courseList}">课程列表</a>
+        <a th:if="${session.user.getRole() == 'student'}" th:href="@{/course/student/courseList}">课程列表</a>
+    </li>
+    <a th:if="${session.user.getRole() == 'admin'}" th:href="@{/exam/teacher/examQuery}">查看题库信息</a>
+    <a th:if="${session.user.getRole() == 'admin'}" th:href="@{/exam/teacher/paperQuery}">查看试卷信息</a>
+    <a th:if="${session.user.getRole() == 'student'}" th:href="@{/exam/student/examRegister}">报名考试</a>
+    <a th:if="${session.user.getRole() == 'student'}" th:href="@{/exam/student/myExam}">我的考试</a>
+    <li><a th:href="@{/api/logout}">退出登录</a></li>
+</ul>
+
+<div id="userInfo" style="display:none;">
+    <h2>用户信息:</h2>
+    <p th:text="'姓名: ' + ${session.user.name}"></p>
+    <p th:text="'邮箱: ' + ${session.user.email}"></p>
+    <p th:text="'用户名: ' + ${session.user.userName}"></p>
+    <p th:text="'角色: ' + ${session.user.role}"></p>
+    <p th:text="'课程名称: ' + ${session.user.className}"></p>
+    <p th:text="'科目: ' + ${session.user.subject}"></p>
+</div>
+</body>
+</html>

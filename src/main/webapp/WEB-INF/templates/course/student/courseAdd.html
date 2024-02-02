@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>课程列表</title>
+  <!-- 引入Bootstrap的CSS文件 -->
+  <!-- CSS -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+  <h1 class="mt-5">选课列表</h1>
+  <a th:href="@{'/course/student/courseList'}" class="btn btn-secondary mb-3">返回</a>
+  <table class="table mt-4">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>课程名称</th>
+      <th>课程描述</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 使用Thymeleaf循环渲染课程数据 -->
+    <tr th:each="course, stat  : ${courses}">
+      <td th:text="${stat.count}"></td>
+      <td th:text="${course.name}"></td>
+      <td th:text="${course.description}"></td>
+      <td>
+
+        <a th:href="@{'/course/student/courseAdd/' + ${course.id}}" class="btn btn-primary">选课</a>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+</body>
+<script>
+</script>
+</html>

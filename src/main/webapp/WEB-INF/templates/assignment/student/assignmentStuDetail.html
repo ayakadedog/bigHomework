@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>作业管理</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .assignment-list {
+            list-style: none;
+            padding: 0;
+        }
+        .assignment-item {
+            background-color: #f8f9fa;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{'/assignment/student/assignmentSubmit/' + ${assignmentId}}" method="post">
+        <ul class="assignment-list">
+            <li th:each="assignment : ${assignmentStuList}" class="assignment-item">
+                <div class="form-group">
+                    <h2 th:text="${assignment.title}">作业标题</h2>
+                    <p th:text="'作业描述 : ' + ${assignment.description}">作业描述</p>
+                    <p th:text="'作业截止日期 : ' + ${assignment.dueDate}" class="assignment-details">作业截止日期</p>
+                    <p th:text="'作业创建日期 : ' + ${assignment.createTime}" class="assignment-details">作业创建日期</p>
+
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="answer">作业答案:</label>-->
+<!--                    <textarea id="answer" name="answer" class="form-control"></textarea>-->
+<!--                </div>-->
+                <!-- 检查 submitWork 对象是否非 null -->
+                <div th:if="${submitWork != null}">
+                    <div class="form-group">
+                        <p>分数: <span th:text="${submitWork.score}">分数</span></p>
+                        <p>反馈: <span th:text="${submitWork.feedback}">反馈</span></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="answerPre">之前的答案:</label>
+                        <textarea id="answerPre" name="answer" class="form-control" disabled th:text="${submitWork.answer}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" disabled>已提交</button>
+                </div>
+
+                <!-- 如果 submitWork 对象为 null，则允许提交 -->
+                <div th:unless="${submitWork != null}">
+                    <div class="form-group">
+                        <label for="answer">作业答案:</label>
+                        <textarea id="answer" name="answer" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">提交作业答案</button>
+                </div>
+<!--                <button type="submit" class="btn btn-primary">提交作业答案</button>-->
+            </li>
+        </ul>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

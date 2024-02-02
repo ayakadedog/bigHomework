@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>新增单元</title>
+
+  <!-- CSS -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+
+  <h1 class="mt-5">新增单元</h1>
+
+  <!-- 表单用于输入课程信息 -->
+  <form th:action="@{'/course/teacher/courseUnitAdd/' + ${courseId} }" method="post" enctype="multipart/form-data">
+
+    <div class="mb-3">
+      <label for="unitName" class="form-label">单元名称</label>
+      <input type="text" class="form-control" id="unitName" name="unitName" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">单元描述</label>
+      <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+    </div>
+
+<!--     文件上传部分-->
+<!--    <div class="mb-3">-->
+<!--      <label for="file" class="form-label">选择文件</label>-->
+<!--      <input type="file" class="form-control" id="file" name="file">-->
+<!--    </div>-->
+
+    <div class="mb-3">
+      <button type="submit" class="btn btn-success" >保存</button>
+      <button onclick="history.back()" class="btn btn-secondary">取消</button>
+    </div>
+  </form>
+
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

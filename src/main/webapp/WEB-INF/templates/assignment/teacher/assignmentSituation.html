@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>作业情况</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .assignment-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .assignment-item {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            margin-bottom: 10px;
+            padding: 10px;
+            cursor: pointer; /* 添加指针样式以表示可点击 */
+        }
+
+        .assignment-details {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <ul class="assignment-list">
+        <!-- 使用Thymeleaf循环渲染作业列表 -->
+        <li th:each="student : ${assignmentSituation}" class="assignment-item">
+            <p th:text="'学生姓名 : ' + ${student.name}"></p>
+            <p>
+                批改状态 :
+                <span th:if="${student.status == 0}">待批阅</span>
+                <span th:if="${student.status == 1}">已批阅</span>
+            </p>
+            <p th:if="${student.score != null}" th:text="'分数 : ' + ${student.score}"></p>
+            <p th:if="${student.feedback != null}" th:text="'反馈信息 : ' + ${student.feedback}"></p>
+            <!-- 添加根据批改状态显示批改按钮的逻辑 -->
+            <a th:href="@{'/assignment/teacher/assignmentGrade/' + ${student.assignmentId} + '/'+ ${student.userId}}" class="btn btn-primary">批改作业</a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

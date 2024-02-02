@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生学习情况</title>
+    <!-- 引入Bootstrap的CSS文件 -->
+    <!-- CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<!-- 添加Bootstrap样式的页面内容 -->
+<div class="container">
+    <h1 class="mt-5">学生学习情况</h1>
+
+    <button onclick="history.back()" class="btn btn-secondary">返回</button>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>学生名字</th>
+            <th>学生课程进度</th>
+            <th>学生成绩</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 使用Thymeleaf循环渲染课程数据 -->
+        <tr th:each="users, stat  : ${users}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${users.name}"></td>
+<!--            <td th:text="${users.description}"></td>-->
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" th:style="'width: ' + ${users.process} + '%'">
+                        <span th:text="${users.process} + '%'"></span>
+                    </div>
+                </div>
+            </td>
+            <td>80</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+<script>
+</script>
+</html>

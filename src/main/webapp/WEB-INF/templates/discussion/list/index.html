@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>讨论区</title>
+    <style>
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: normal;
+            line-height: 1.4;
+        }
+
+        .discussion-list {
+            width: 80%;
+            margin: auto;
+        }
+
+        .discussion-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .discussion-title {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .discussion-info {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* 新增的表单样式 */
+        form {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+        }
+
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* 新增的表单标题样式 */
+        .form-title {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 th:text="${course.name + '讨论区'}">XX讨论区</h1>
+
+<div class="discussion-list">
+    <div class="discussion-item" th:each="discussion : ${discussions}">
+        <a
+                class="discussion-title"
+                th:text="${discussion.title}"
+                th:href="@{/discussion/detail/(id=${discussion.id})}"
+        >讨论主题
+        </a>
+        <div class="discussion-info">
+            <span th:text="${discussion.userName}">发布者</span> |
+            <span th:text="${discussion.createdAt}">发布日期</span> |
+            <span th:text="${discussion.views}">浏览量</span>
+        </div>
+    </div>
+</div>
+
+<!-- 底部表单 -->
+<form th:action="@{/api/discussion/add(course_id=${course.id})}" method="post">
+    <!-- 表单标题 -->
+    <div class="form-title">新增帖子</div>
+    <label for="title">标题:</label><br>
+    <input type="text" id="title" name="title"><br>
+    <label for="content">内容:</label><br>
+    <textarea id="content" name="content"></textarea><br>
+    <input type="submit" value="提交">
+</form>
+
+</body>
+</html>
